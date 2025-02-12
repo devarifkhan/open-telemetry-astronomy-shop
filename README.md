@@ -76,20 +76,20 @@ sudo usermod -aG docker $USER
 curl -LO "https://dl.k8s.io/release/$(curl -L -s https://dl.k8s.io/release/stable.txt)/bin/linux/amd64/kubectl"
 ```
 
-# Validate the binary (optional)
+## Validate the binary (optional)
 
 ```bash
 curl -LO "https://dl.k8s.io/release/$(curl -L -s https://dl.k8s.io/release/stable.txt)/bin/linux/amd64/kubectl.sha256"
 echo "$(cat kubectl.sha256)  kubectl" | sha256sum --check
 ```
 
-# Install kubectl
+## Install kubectl
 
 ```bash
 sudo install -o root -g root -m 0755 kubectl /usr/local/bin/kubectl
 ```
 
-# If you do not have root access on the target system, you can still install kubectl to the ~/.local/bin directory:
+## If you do not have root access on the target system, you can still install kubectl to the ~/.local/bin directory:
 
 ```bash
 chmod +x kubectl
@@ -98,7 +98,7 @@ mv ./kubectl ~/.local/bin/kubectl
 # and then append (or prepend) ~/.local/bin to $PATH
 ```
 
-# Test to ensure the version you installed is up-to-date:
+## Test to ensure the version you installed is up-to-date:
 
 ```bash
 kubectl version --client
