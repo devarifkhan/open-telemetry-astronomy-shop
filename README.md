@@ -149,3 +149,11 @@ go to the security group edit inbound rules and add the following rules:
 ```bash
 http://<public-ip>:8080
 ```
+
+## Containerize the OpenTelemetry Astronomy Shop
+
+```bash
+cd opentelemetry-demo/src/product-catalog
+export PRODUCT_CATALOG_PORT=8088
+go build -o product-catalog .
+```
