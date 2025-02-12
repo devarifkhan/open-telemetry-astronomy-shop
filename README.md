@@ -63,7 +63,7 @@ echo \
 sudo apt-get update
 ```
 
-# not to use `sudo` every time.
+## not to use `sudo` every time.
 
 ```bash
 sudo usermod -aG docker $USER
