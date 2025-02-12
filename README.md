@@ -34,6 +34,7 @@ action, visit: [OpenTelemetry Demo Documentation](https://opentelemetry.io/docs/
 - instance type: t2.large (2 vCPUs, 8GB RAM)
 - key pair: devops.pem
 - Allow all traffic from anywhere
+- 30 GB Storage
 
 ## Connect to the EC2 instance
 
@@ -117,4 +118,12 @@ sudo apt update
 sudo apt-get install terraform
 
 terraform --version
+```
+
+## Run Locally the OpenTelemetry Astronomy Shop Using Docker Compose
+
+```bash
+git clone https://github.com/open-telemetry/opentelemetry-demo.git
+cd opentelemetry-demo
+docker compose up
 ```
