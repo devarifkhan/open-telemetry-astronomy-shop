@@ -61,3 +61,7 @@ echo \
   sudo tee /etc/apt/sources.list.d/docker.list > /dev/null
 sudo apt-get update
 ```
+# not to use `sudo` every time.
+```bash
+sudo usermod -aG docker $USER
+```
