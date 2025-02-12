@@ -22,3 +22,23 @@ For detailed documentation on how to install and run the demo, and to explore va
 
 ## Prepare the Environment
 ## Set up a AWS EC2 instance
+- name: devops
+- image: Ubuntu Server 24.04 LTS
+- instance type: t2.large (2 vCPUs, 8GB RAM) 
+- key pair: devops.pem
+- Allow all traffic from anywhere
+
+## Connect to the EC2 instance
+```bash
+$ chmod 400 devops.pem
+$ ssh -i devops.pem ubuntu@<public-ip>
+```
+## Install Docker to the EC2 instance
+```bash
+$ sudo apt update
+$ sudo apt install docker.io
+$ sudo systemctl start docker
+$ sudo systemctl enable docker
+$ sudo usermod -aG docker $USER
+$ docker --version
+```
