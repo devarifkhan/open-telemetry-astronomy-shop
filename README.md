@@ -150,3 +150,84 @@ go to the security group edit inbound rules and add the following rules:
 http://<public-ip>:8080
 ```
 
+## After Creating the EKS and S3 bucket setup the EKS
+```bash
+aws eks --region ap-south-1 update-kubeconfig --name my-eks-cluster
+kubectl config view
+kubectl get nodes
+```
+Now run all microservice by kubernetes
+```bash
+~/opentelemetry-demo/kubernetes$ kubectl apply -f opentelemetry-demo.yaml 
+```
+To access from outside make this type to LoadBalancer
+```bash
+~/opentelemetry-demo/kubernetes$ kubectl get svc | grep frontendproxy
+opentelemetry-demo-frontendproxy           ClusterIP   172.20.11.57     <none>        8080/TCP                                                   6m19s
+~/opentelemetry-demo/kubernetes$ kubectl edit svc opentelemetry-demo-frontendproxy 
+type: LoadBalancer
+```
+
+now you can access the project by the LoadBalancer IP
+```bash
+http://<EXTERNAL-IP>:8080/
+```
+
+## After setup the Ingress Controller
+change the type to NodePort
+```bash
+~/opentelemetry-demo/kubernetes$ kubectl edit svc opentelemetry-demo-frontendproxy
+type: NodePort
+```
+## Now write the ingress file
+```bash
+vim ingress.yaml
+
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: frontend-proxy
+  annotations:
+    alb.ingress.kubernetes.io/scheme: internet-facing
+    alb.ingress.kubernetes.io/target-type: ip
+spec:
+  ingressClassName: alb
+  rules:
+    - host: example.com
+      http:
+        paths:
+          - path: "/"
+            pathType: Prefix
+            backend:
+                service:
+                    name: opentelemetry-demo-frontendproxy
+                    port:
+                      number: 8080
+```
+
+## Now get the kubectl ingress load balancer
+```bash
+
+/opentelemetry-demo/kubernetes$ kubectl get ing
+NAME             CLASS   HOSTS         ADDRESS                                                                   PORTS   AGE
+frontend-proxy   alb     example.com   k8s-default-frontend-6e54782b3e-1502274640.ap-south-1.elb.amazonaws.com   80      27s
+```
+
+## Change the etc hosts to map to example.com [ use firefox chrome will not work]
+```bash
+sudo vim /etc/hosts
+
+```
+
+## Create a setup the domain in Route53 and assign it to the LoadBalancer By Yourself
+
+## Install AgroCD And make pipeline for the project
+```bash
+kubectl create namespace argocd
+kubectl apply -n argocd -f https://raw.githubusercontent.com/argoproj/argo-cd/stable/manifests/install.yaml
+```
+## Get the username and password for ArgoCD
+```bash
+# The username is 'admin'
+kubectl -n argocd get secret argocd-initial-admin-secret -o jsonpath="{.data.password}" | base64 -d; echo
+```

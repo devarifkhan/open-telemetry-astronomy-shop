@@ -3,10 +3,11 @@ provider "aws" {
 }
 
 resource "aws_s3_bucket" "terraform_state" {
-    bucket = "unique-terraform-eks-state-bucket"
-    lifecycle {
-        prevent_destroy = false
-    }
+  bucket = "unique-terraform-eks-state-bucket"
+
+  lifecycle {
+    prevent_destroy = false
+  }
 }
 
 resource "aws_s3_bucket_versioning" "terraform_state" {
