@@ -146,4 +146,6 @@ go to the security group edit inbound rules and add the following rules:
 - Type: All Traffic, Protocol: All, Port Range: All, Source: Anywhere-IpV4here
 
 ## Now Access the project
+```bash
 http://<public-ip>:8080
+```
