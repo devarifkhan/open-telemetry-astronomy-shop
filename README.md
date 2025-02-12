@@ -20,5 +20,5 @@ The primary goals of this project are:
 
 For detailed documentation on how to install and run the demo, and to explore various scenarios to view OpenTelemetry in action, visit: [OpenTelemetry Demo Documentation](https://opentelemetry.io/docs/demo/)
 
-## Let's start the devops practice
+## Prepare the Environment
 ## Set up a AWS EC2 instance
