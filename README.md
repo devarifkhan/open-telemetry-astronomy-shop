@@ -62,34 +62,44 @@ echo \
   sudo tee /etc/apt/sources.list.d/docker.list > /dev/null
 sudo apt-get update
 ```
+
 # not to use `sudo` every time.
+
 ```bash
 sudo usermod -aG docker $USER
 ```
 
 ## Install kubectl to the EC2 instance
+
 ```bash
 # Download the latest release with the command:
 curl -LO "https://dl.k8s.io/release/$(curl -L -s https://dl.k8s.io/release/stable.txt)/bin/linux/amd64/kubectl"
 ```
 
 # Validate the binary (optional)
+
 ```bash
 curl -LO "https://dl.k8s.io/release/$(curl -L -s https://dl.k8s.io/release/stable.txt)/bin/linux/amd64/kubectl.sha256"
 echo "$(cat kubectl.sha256)  kubectl" | sha256sum --check
 ```
+
 # Install kubectl
+
 ```bash
 sudo install -o root -g root -m 0755 kubectl /usr/local/bin/kubectl
 ```
+
 # If you do not have root access on the target system, you can still install kubectl to the ~/.local/bin directory:
+
 ```bash
 chmod +x kubectl
 mkdir -p ~/.local/bin
 mv ./kubectl ~/.local/bin/kubectl
 # and then append (or prepend) ~/.local/bin to $PATH
 ```
+
 # Test to ensure the version you installed is up-to-date:
+
 ```bash
 kubectl version --client
 #  use this for detailed view of version:
@@ -98,6 +108,7 @@ kubectl version --client --output=yaml
 ```
 
 ## Install Terraform to the EC2 instance
+
 ```bash
 sudo apt-get update && sudo apt-get install -y gnupg software-properties-common
 
@@ -127,3 +138,12 @@ git clone https://github.com/open-telemetry/opentelemetry-demo.git
 cd opentelemetry-demo
 docker compose up
 ```
+
+## Setup Security Group
+
+go to the security group edit inbound rules and add the following rules:
+
+- Type: All Traffic, Protocol: All, Port Range: All, Source: Anywhere-IpV4here
+
+## Now Access the project
+http://<public-ip>:8080
